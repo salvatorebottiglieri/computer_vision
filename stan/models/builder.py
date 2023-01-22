@@ -1,7 +1,4 @@
-# Copyright (c) 2020 Hai Nguyen
-#
-# This software is released under the MIT License.
-# https://opensource.org/licenses/MIT
+
 import tensorflow as tf
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input

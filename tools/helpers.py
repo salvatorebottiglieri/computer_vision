@@ -1,7 +1,4 @@
-# Copyright (c) 2020 Hai Nguyen
-# 
-# This software is released under the MIT License.
-# https://opensource.org/licenses/MIT
+
 
 import os
 from tensorflow.keras.callbacks import (
@@ -72,18 +69,17 @@ def get_generators(
         tuple -- training gen, validation gen
     """    
     train_fnames = [os.path.splitext(f)[0] 
-                    for f in os.listdir(os.path.join(train_dir, 'images'))]
+                    for f in os.listdir(os.path.join(train_dir, 'img'))]
     train_gen = BUSIGenerator(
         train_fnames, train_dir,
         resized_shape=input_shape,
-        input_channel=input_channel,
         **kwargs,
         # horizontal_flip=True,
         # rotation_range=20, width_shift_range=10,
     )
     val_gen = None
     if val_dir:
-        val_fnames = [os.path.splitext(f)[0] 
+        val_fnames = [os.path.splitext(f)[0]
                         for f in os.listdir(os.path.join(val_dir, 'images'))]
         val_gen = BUSIGenerator(
             val_fnames, val_dir,

@@ -1,11 +1,4 @@
-# import tensorflow as tf
-# import numpy as np
 
-
-# class EncoderTest(tf.test.TestCase):
-#     def setUp(self):
-#         super(EncoderTest, self).setUp()
-#         self.
 
 import tensorflow as tf
 import numpy as np

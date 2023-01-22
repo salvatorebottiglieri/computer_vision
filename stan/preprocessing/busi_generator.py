@@ -1,13 +1,9 @@
-# Copyright (c) 2020 Hai Nguyen
-# 
-# This software is released under the MIT License.
-# https://opensource.org/licenses/MIT
-
 import os
 import cv2
 import numpy as np
-
 from .generator import BaseGenerator
+
+TRAIN_DIR = "C:\\Users\\Salvatore\\Desktop\\Computer_Vision\\computer_vision\\Dataset_BUSI_with_GT\\malignant\\"
 
 
 class BUSIGenerator(BaseGenerator):
@@ -44,24 +40,28 @@ class BUSIGenerator(BaseGenerator):
         return imgs
 
     def _read_data(self, ids):
+        input_channel = 3
         imgs = np.empty((self.batch_size, self.resized_shape[0],
-                        self.resized_shape[1], self.input_channel))
+                         self.resized_shape[1], input_channel))
         msks = np.empty((self.batch_size, self.resized_shape[0],
                          self.resized_shape[1], 1))
 
         for i, index in enumerate(ids):
             file_name = self.fnames[index]
-            
+
             read_im_mode = 1
             if self.input_channel == 1:
                 read_im_mode = 0
 
-            img = cv2.imread(
-                os.path.join(self.data_dir, 'images', f'{file_name}.png'),
+            image_path = os.path.join(TRAIN_DIR, 'img', f'{file_name}.png')
+            mask_path = os.path.join(TRAIN_DIR, 'mask', f'{file_name}.png')
+
+            msk = cv2.imread(
+                mask_path,
                 read_im_mode
             )
-            msk = cv2.imread(
-                os.path.join(self.data_dir, 'masks', f'{file_name}.png'),
+            img = cv2.imread(
+                image_path,
                 read_im_mode
             )
 
@@ -69,7 +69,9 @@ class BUSIGenerator(BaseGenerator):
                 img = cv2.resize(img, self.resized_shape)
                 msk = cv2.resize(msk, self.resized_shape)
 
+            msk = np.expand_dims(msk, axis=2)
+            msk = msk[:, :, :, 0]
             imgs[i] = img
-            msks[i] = np.expand_dims(msk, axis=2)
-        
+            msks[i] = msk
+
         return imgs, msks
