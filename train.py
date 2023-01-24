@@ -1,5 +1,5 @@
 from tensorflow.keras.optimizers import Adam
-
+from matplotlib import pyplot as plt
 # if __name__ == "__main__" and __package__ is None:
 #     sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
@@ -8,6 +8,16 @@ from stan.utils.metrics import dice_coef
 from stan.utils.losses import focal_tversky_loss
 
 from tools.helpers import get_callbacks, get_generators
+
+def plot_dice_coef_loss_on_epochs(history):
+    plt.figure(figsize=(14,10))
+    plt.title("Dice_Coeff&Loss")
+    plt.xlabel("Epoca")
+    plt.ylabel("Scores")
+    plt.plot(history.history['loss'],label="loss")
+    plt.plot(history.history['dice_coeff'],label="dice_coeff")
+    plt.legend(['loss','dice_coeff'])
+    plt.show()
 
 
 def train(
@@ -19,7 +29,7 @@ def train(
     model_name
 ):
     input_shape = (input_shape, input_shape)
-    epochs=3
+    epochs=1
     batch_size=8
 
     optimizer = Adam(lr=lr)
@@ -39,14 +49,15 @@ def train(
         output_activation='sigmoid'
     )
     model.compile(optimizer=optimizer, loss=criterion, metrics=[dice_coef])
-    model.fit(train_gen, batch_size=batch_size, callbacks=callbacks,
+    history = model.fit(train_gen, batch_size=batch_size, callbacks=callbacks,
               epochs=epochs, steps_per_epoch=len(train_gen),
               validation_data=val_gen, validation_steps=1,verbose="1")
 
+    plot_dice_coef_loss_on_epochs(history)
 
 if __name__ == "__main__":
 
-    train_dir = r"C:\Users\Salvatore\Desktop\Computer_Vision\computer_vision\Dataset_BUSI_with_GT\malignant"
+    train_dir = "/home/salvatore/computer_vision/Dataset_BUSI_with_GT/malignant"
     val_dir = ""
     n_class = 1
     epochs=2

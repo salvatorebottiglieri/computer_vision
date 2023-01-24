@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from .generator import BaseGenerator
 
-TRAIN_DIR = "C:\\Users\\Salvatore\\Desktop\\Computer_Vision\\computer_vision\\Dataset_BUSI_with_GT\\malignant\\"
+TRAIN_DIR = "/home/salvatore/computer_vision/Dataset_BUSI_with_GT/malignant"
 
 
 class BUSIGenerator(BaseGenerator):
