@@ -19,7 +19,7 @@ def train(
     model_name
 ):
     input_shape = (input_shape, input_shape)
-    epochs=3
+    epochs=1
     batch_size=8
 
     optimizer = Adam(lr=lr)
@@ -39,10 +39,11 @@ def train(
         output_activation='sigmoid'
     )
     model.compile(optimizer=optimizer, loss=criterion, metrics=[dice_coef])
-    model.fit(train_gen, batch_size=batch_size, callbacks=callbacks,
+    history = model.fit(train_gen, batch_size=batch_size, callbacks=callbacks,
               epochs=epochs, steps_per_epoch=len(train_gen),
               validation_data=val_gen, validation_steps=1,verbose="1")
 
+    print(history)
 
 if __name__ == "__main__":
 
