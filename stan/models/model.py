@@ -52,8 +52,7 @@ def STAN(
     
     if freeze_encoder:
         freeze_model(model)
-    
-    # TODO: able to load pre-trained weights to encoder
+
     
     # model.name = model_name
 
