@@ -1,6 +1,7 @@
 from tensorflow.keras.optimizers import Adam
 from matplotlib import pyplot as plt
 import os
+import splitfolders
 # if __name__ == "__main__" and __package__ is None:
 #     sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
@@ -60,12 +61,13 @@ def train(
                 verbose="1")
 
 
+def split_train_test(path):
+    splitfolders.ratio(path, seed=42, ratio=(.7, .3))
+
 
 if __name__ == "__main__":
 
     ROOT_DIR = os.path.dirname(os.path.abspath(__file__))  # This is your Project Root
-
-
 
     train_dir =  os.path.join(ROOT_DIR,"Dataset_BUSI_with_GT","train")
     test_dir = os.path.join(ROOT_DIR,"Dataset_BUSI_with_GT","test")
