@@ -3,14 +3,15 @@ import cv2
 import numpy as np
 from .generator import BaseGenerator
 
-TRAIN_DIR = "/home/salvatore/computer_vision/Dataset_BUSI_with_GT/malignant"
+
 
 
 class BUSIGenerator(BaseGenerator):
-    def __init__(self, fnames, input_channel=3, norm_mode='tf', **kwargs):
+    def __init__(self, fnames, data_dir, input_channel=3, norm_mode='tf', **kwargs):
         super(BUSIGenerator, self).__init__(fnames, **kwargs)
         self.input_channel = input_channel
         self.norm_mode = norm_mode
+        self.data_dir = data_dir
 
     def _norm(self, tensor, mode='tf'):
         if mode == 'tf':
@@ -53,8 +54,8 @@ class BUSIGenerator(BaseGenerator):
             if self.input_channel == 1:
                 read_im_mode = 0
 
-            image_path = os.path.join(TRAIN_DIR, 'img', f'{file_name}.png')
-            mask_path = os.path.join(TRAIN_DIR, 'mask', f'{file_name}.png')
+            image_path = os.path.join(self.data_dir, 'images', f'{file_name}.png')
+            mask_path = os.path.join(self.data_dir, 'mask', f'{file_name}.png')
 
             msk = cv2.imread(
                 mask_path,

@@ -68,9 +68,9 @@ def get_generators(
     Returns:
         tuple -- training gen, validation gen
     """    
-    train_fnames = [os.path.splitext(f)[0] for f in os.listdir(os.path.join(train_dir, 'img'))]
+    train_fnames = [os.path.splitext(f)[0] for f in os.listdir(os.path.join(train_dir, 'images'))]
     train_gen = BUSIGenerator(
-        train_fnames, train_dir,
+        train_fnames, data_dir=train_dir,
         resized_shape=input_shape,
         **kwargs,
         # horizontal_flip=True,
@@ -81,7 +81,7 @@ def get_generators(
         val_fnames = [os.path.splitext(f)[0]
                         for f in os.listdir(os.path.join(val_dir, 'images'))]
         val_gen = BUSIGenerator(
-            val_fnames, val_dir,
+            val_fnames, data_dir=val_dir,
             resized_shape=input_shape,
             input_channel=input_channel,
             **kwargs,
