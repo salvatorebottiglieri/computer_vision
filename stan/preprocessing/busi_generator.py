@@ -55,7 +55,7 @@ class BUSIGenerator(BaseGenerator):
                 read_im_mode = 0
 
             image_path = os.path.join(self.data_dir, 'images', f'{file_name}.png')
-            mask_path = os.path.join(self.data_dir, 'mask', f'{file_name}.png')
+            mask_path = os.path.join(self.data_dir, 'masks', f'{file_name}.png')
 
             msk = cv2.imread(
                 mask_path,

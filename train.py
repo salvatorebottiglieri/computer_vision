@@ -11,6 +11,9 @@ from stan.utils.losses import focal_tversky_loss
 
 from tools.helpers import get_callbacks, get_generators
 
+def split_train_test(path):
+    splitfolders.ratio(path, seed=42, ratio=(.7, .3))
+
 def plot_dice_coef_loss_on_epochs(history):
     plt.figure(figsize=(14,10))
     plt.title("Dice_Coeff&Loss")
@@ -21,8 +24,8 @@ def plot_dice_coef_loss_on_epochs(history):
     plt.legend(['loss','dice_coeff'])
     plt.show()
 
-def evaluate_model(model, X_test, Y_test):
-    result = model.evaluate(X_test,Y_test)
+def evaluate_model(model, test_gen):
+    result = model.evaluate(test_gen)
     print(result)
 
 
@@ -45,7 +48,7 @@ def train(
     callbacks = get_callbacks(snapshot_dir, model_name, 
                               tensorboard, tensorboard_dir, batch_size)
 
-    train_gen, test_dir = get_generators(train_dir, test_dir,
+    train_gen, test_gen = get_generators(train_dir, test_dir,
                                         input_shape, input_channel,
                                         horizontal_flip=True)
 
@@ -57,12 +60,12 @@ def train(
     )
     model.compile(optimizer=optimizer, loss=criterion, metrics=[dice_coef])
     model.fit(train_gen, batch_size=batch_size, callbacks=callbacks,
-              epochs=epochs, steps_per_epoch=len(train_gen),
-                verbose="1")
+              epochs=epochs, steps_per_epoch=len(train_gen))
+
+    evaluate_model(model,test_gen)
 
 
-def split_train_test(path):
-    splitfolders.ratio(path, seed=42, ratio=(.7, .3))
+
 
 
 if __name__ == "__main__":
