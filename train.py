@@ -83,4 +83,4 @@ if __name__ == "__main__":
     tensorboard_dir = "./log"
     model_name = "Test"
 
-    #train(train_dir,test_dir,n_class,lr,input_shape,input_channel,decode_mode,snapshot_dir,tensorboard,tensorboard_dir,model_name)
+    train(train_dir,test_dir,n_class,lr,input_shape,input_channel,decode_mode,snapshot_dir,tensorboard,tensorboard_dir,model_name)
