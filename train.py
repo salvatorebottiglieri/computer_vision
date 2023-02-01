@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
     train_dir =  os.path.join(ROOT_DIR,"Dataset_BUSI_with_GT","train")
     test_dir = os.path.join(ROOT_DIR,"Dataset_BUSI_with_GT","test")
-    n_class = 3
+    n_class = 1
     epochs=50
     batch_size=8
     snapshot_dir = "."
